@@ -18,9 +18,9 @@
 import sys
 seen = {}
 for full_line in sys.stdin:
-  line = full_line.rstrip()
+  line = full_line.rstrip().rstrip("\n")
   if line not in seen:
-    sys.stdout.write(full_line)
+    print("A %s." % line)
     seen[line] = 1
 
 sys.stdout.close()

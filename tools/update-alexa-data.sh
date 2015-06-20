@@ -15,7 +15,7 @@
 #
 #
 #
-# This script is provided to update the data/top-10000.txt file.
+# This script is provided to update the data/alexa-top-2000-domains.txt file.
 
 CSV='top-1m.csv'
 
@@ -23,9 +23,9 @@ CSV='top-1m.csv'
 # only use 1-2 Google TLD's. Clean all but the real one to match reality.
 REMOVE='google\.[a-z][a-z]$|google\.co\.|google\.com\.[a-z][a-z]'
 ALEXA_URL=http://s3.amazonaws.com/alexa-static/$CSV.zip
-TOP_COUNT=10000
+TOP_COUNT=2000
 UNIQ_COUNT=14000
-OUTPUT=alexa-top-${TOP_COUNT}-global.txt
+OUTPUT=../data/alexa-top-${TOP_COUNT}-domains.txt
 
 if [ ! -f "$CSV" ]; then
   if [ ! -f "${CSV}.zip" ]; then
@@ -35,7 +35,7 @@ if [ ! -f "$CSV" ]; then
   unzip -o $CSV.zip $CSV
 fi
 
-rm $OUTPUT
+rm -f $OUTPUT
 cut -d, -f2 $CSV | cut -d/ -f1 | head -$UNIQ_COUNT | ./ordered-uniq.py | \
   egrep -v $REMOVE | head -$TOP_COUNT > $OUTPUT
 ls -la $OUTPUT
